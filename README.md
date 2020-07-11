@@ -1,0 +1,2 @@
+# MyStoreTemplate
+My shop demo
