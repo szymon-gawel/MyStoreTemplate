@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyStore.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity 
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
 
@@ -20,7 +20,7 @@ namespace MyStore.DataAccess.InMemory
             className = typeof(T).Name;
             items = cache[className] as List<T>;
 
-            if(items == null)
+            if (items == null)
             {
                 items = new List<T>();
             }
@@ -40,7 +40,7 @@ namespace MyStore.DataAccess.InMemory
         {
             T tToUpdate = items.Find(i => i.Id == t.Id);
 
-            if(tToUpdate != null)
+            if (tToUpdate != null)
             {
                 tToUpdate = t;
             }
@@ -54,7 +54,7 @@ namespace MyStore.DataAccess.InMemory
         {
             T t = items.Find(i => i.Id == Id);
 
-            if(t != null)
+            if (t != null)
             {
                 return t;
             }
