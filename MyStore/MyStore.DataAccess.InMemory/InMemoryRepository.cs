@@ -1,4 +1,5 @@
-﻿using MyStore.Core.Models;
+﻿using MyStore.Core.Contarcts;
+using MyStore.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
