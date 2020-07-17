@@ -1,9 +1,12 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MyStore.Core.Contarcts;
+using MyStore.Core.Models;
+using MyStore.Core.ViewModels;
 using MyStore.WebUI;
 using MyStore.WebUI.Controllers;
 
@@ -13,42 +16,18 @@ namespace MyStore.WebUI.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void IndexPageDoesReturnProducts()
         {
-            //// Arrange
-            //HomeController controller = new HomeController();
+            IRepository<Product> productContext = new Mocks.MockContext<Product>();
+            IRepository<ProductCategory> productCategoryContext = new Mocks.MockContext<ProductCategory>();
 
-            //// Act
-            //ViewResult result = controller.Index() as ViewResult;
+            productContext.Insert(new Product());
+            HomeController controller = new HomeController(productContext, productCategoryContext);
 
-            //// Assert
-            //Assert.IsNotNull(result);
-        }
+            var result = controller.Index() as ViewResult;
+            var viewModel = (ProductListViewModel) result.ViewData.Model;
 
-        [TestMethod]
-        public void About()
-        {
-            //// Arrange
-            //HomeController controller = new HomeController();
-
-            //// Act
-            //ViewResult result = controller.About() as ViewResult;
-
-            //// Assert
-            //Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            //// Arrange
-            //HomeController controller = new HomeController();
-
-            //// Act
-            //ViewResult result = controller.Contact() as ViewResult;
-
-            //// Assert
-            //Assert.IsNotNull(result);
+            Assert.AreEqual(1, viewModel.Products.Count());
         }
     }
 }
